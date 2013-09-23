@@ -1,0 +1,32 @@
+ros-hydro-moveit-ikfast (3.0.5-0raring) raring; urgency=high
+
+  * use GetIkType() instead of #defines
+    This removes the need to manually specify the IK type using #define
+    IKTYPE_... and closes #5 <https://github.com/ros-planning/moveit_ikfast/issues/5>.
+  * Fix to check all depencies are in package.xml
+  * Merge pull request #10 <https://github.com/ros-planning/moveit_ikfast/issues/10> from ros-planning/auto_update_script
+  * Merge pull request #9 <https://github.com/ros-planning/moveit_ikfast/issues/9> from fsuarez6/master
+    Fix IKfast plugin undefined symbol poseMsgToKDL
+  * Check for file existance first
+  * Added auto update script for keeping your plugin up to date with changes in the kinematics plugin format
+  * Merge branch 'master' into multiple_plugins
+  * Added tf_conversions dependency to expose its functions to the plugin (e.g. poseMsgToKDL)
+  * fix whitespace
+
+ -- Dave Coleman <davetcoleman@gmail.com>  Sun, 22 Sep 2013 21:00:00 -0000
+
+ros-hydro-moveit-ikfast (3.0.4-0raring) raring; urgency=high
+
+  * Changed order of parameters consistency_limits and solution to match the searchPositionIK signature.
+
+ -- Dave Coleman <davetcoleman@gmail.com>  Tue, 16 Jul 2013 21:00:00 -0000
+
+ros-hydro-moveit-ikfast (3.0.3-0raring) raring; urgency=high
+
+  * fixed IKFast code generator template to fit MoveIt interface
+  * added error message in case of malformed SRDF
+  * fix IK and FK for IK types other than Transform6D
+
+ -- Dave Coleman <davetcoleman@gmail.com>  Tue, 16 Jul 2013 21:00:00 -0000
+
+
