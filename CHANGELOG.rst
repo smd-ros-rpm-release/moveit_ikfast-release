@@ -2,6 +2,13 @@
 Changelog for package moveit_ikfast
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.0.6 (2014-01-03)
+------------------
+* adding sphinx documentation
+* added branch name to build status
+* added travis build status indicator in README.md
+* added travis support
+
 3.0.5 (2013-09-23)
 ------------------
 * use GetIkType() instead of #defines
