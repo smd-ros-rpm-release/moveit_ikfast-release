@@ -1,3 +1,22 @@
+## moveit_ikfast (hydro) - 3.0.7-0
+
+User `isucan@isucan-glaptop0` released the packages in the `moveit_ikfast` repository into the `hydro` distro by running `/usr/bin/bloom-release -t hydro -r hydro moveit_ikfast` on `Wed, 26 Feb 2014 05:36:14 -0000`
+
+The `moveit_ikfast` package was released.
+
+Version of package(s) in repository `moveit_ikfast`:
+- rosdistro version: `3.0.6-0`
+- old version: `3.0.6-0`
+- new version: `3.0.7-0`
+
+Versions of tools used:
+- bloom version: `0.5.1`
+- catkin_pkg version: `0.1.26`
+- rosdep version: `0.10.25`
+- rosdistro version: `0.3.4`
+- vcstools version: `0.1.33`
+
+
 ## moveit_ikfast - 3.0.6-0
 
 User `schitta@schitta-pc` released the packages in the `moveit_ikfast` repository by running `/usr/bin/bloom-release moveit_ikfast --track hydro --rosdistro hydro` on `Sat, 04 Jan 2014 01:23:20 -0000`
