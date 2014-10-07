@@ -1,3 +1,24 @@
+## moveit_ikfast (indigo) - 3.0.7-1
+
+The packages in the `moveit_ikfast` repository were released into the `indigo` distro by running `/usr/bin/bloom-release --rosdistro indigo --track indigo moveit_ikfast --edit` on `Tue, 07 Oct 2014 23:32:20 -0000`
+
+The `moveit_ikfast` package was released.
+
+Version of package(s) in repository `moveit_ikfast`:
+- upstream repository: https://github.com/ros-planning/moveit_ikfast
+- release repository: https://github.com/ros-gbp/moveit_ikfast-release.git
+- rosdistro version: `3.0.7-0`
+- old version: `3.0.7-0`
+- new version: `3.0.7-1`
+
+Versions of tools used:
+- bloom version: `0.5.12`
+- catkin_pkg version: `0.2.4`
+- rosdep version: `0.10.30`
+- rosdistro version: `0.3.5`
+- vcstools version: `0.1.35`
+
+
 ## moveit_ikfast (indigo) - 3.0.7-0
 
 User `isucan@isucan-glaptop0` released the packages in the `moveit_ikfast` repository into the `indigo` distro by running `/usr/bin/bloom-release -t indigo -r indigo moveit_ikfast --new-track` on `Wed, 26 Feb 2014 05:39:29 -0000`
