@@ -52,6 +52,8 @@ from lxml import etree
 import shutil
 
 plugin_gen_pkg = 'moveit_ikfast'  # package containing this file
+# Allowed search modes, see SEARCH_MODE enum in template file
+search_modes = ['OPTIMIZE_MAX_JOINT', 'OPTIMIZE_FREE_JOINT' ]
 
 if __name__ == '__main__':
    # Check input arguments
@@ -59,10 +61,20 @@ if __name__ == '__main__':
       robot_name = sys.argv[1]
       planning_group_name = sys.argv[2]
       moveit_plugin_pkg = sys.argv[3]
-      ikfast_output_file = sys.argv[4]
-      assert( len(sys.argv) < 6 )   # invalid num-arguments
+      if len(sys.argv) == 6:
+         ikfast_output_file = sys.argv[5]
+         search_mode = sys.argv[4]
+         if search_mode not in search_modes:
+            print 'Invalid search mode. Allowed values: ', search_modes
+            raise Exception()
+      elif len(sys.argv) == 5:
+         search_mode = search_modes[0];
+         print "Warning: The default search has changed from OPTIMIZE_FREE_JOINT to now %s!" % (search_mode)
+         ikfast_output_file = sys.argv[4]
+      else:
+         raise Exception()  
    except:
-      print("\nUsage: create_ikfast_plugin.py <yourrobot_name> <planning_group_name> <moveit_plugin_pkg> ikfast_output_path>\n")
+      print("\nUsage: create_ikfast_plugin.py <yourrobot_name> <planning_group_name> <moveit_plugin_pkg> [<search_mode>] <ikfast_output_path>\n")
       sys.exit(-1)
    print '\nIKFast Plugin Generator'
 
@@ -208,6 +220,7 @@ if __name__ == '__main__':
    template_text = template_file_data.read()
    template_text = re.sub('_ROBOT_NAME_', robot_name, template_text)
    template_text = re.sub('_GROUP_NAME_', planning_group_name, template_text)
+   template_text = re.sub('_SEARCH_MODE_', search_mode, template_text)
    plugin_file_base = robot_name + '_' + planning_group_name + '_ikfast_moveit_plugin.cpp'
 
    plugin_file_name = plugin_pkg_dir + '/src/' + plugin_file_base
@@ -263,25 +276,20 @@ if __name__ == '__main__':
    package_file_name = plugin_pkg_dir+"/package.xml"
    package_xml = etree.parse(package_file_name, parser)
 
-   # Check that all the dependencies are in the depends list
-   modified_pkg = False
-   for dependency in ["moveit_core", "pluginlib", "roscpp", "tf_conversions"]:
-      found = False
-      for depend_entry in package_xml.getroot().findall("build_depend"):
-         if depend_entry.text == dependency:
-            found = True
-            break  
-      if not found:    
-         modified_pkg = True
-         # Build depend
-         child = etree.Element("build_depend")
-         child.text = dependency
-         package_xml.getroot().append(child)
+   # Make sure at least all required dependencies are in the depends lists
+   build_deps = ["liblapack-dev", "moveit_core", "pluginlib", "roscpp", "tf_conversions"]
+   run_deps   = ["liblapack-dev", "moveit_core", "pluginlib", "roscpp", "tf_conversions"]
 
-         # Run depend
-         child = etree.Element("run_depend")
-         child.text = dependency
-         package_xml.getroot().append(child)
+   def update_deps(reqd_deps, req_type, e_parent):
+      curr_deps = [e.text for e in e_parent.findall(req_type)]
+      missing_deps = set(reqd_deps) - set(curr_deps)
+      for d in missing_deps:
+         etree.SubElement(e_parent, req_type).text = d
+      return missing_deps
+
+   # empty sets evaluate to false
+   modified_pkg  = update_deps(build_deps, "build_depend", package_xml.getroot())
+   modified_pkg |= update_deps(run_deps, "run_depend", package_xml.getroot())
 
    if modified_pkg:
       with open(package_file_name,"w") as f:
